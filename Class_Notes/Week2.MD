@@ -14,6 +14,7 @@
 ### Looking Under the Hood (More Advanced View)
 
 - But, a programmer's view ABSTRACTS lots of what's happening in the hardware. 
+
 - If we know what happens under the hood, we can write better programs! 
     - Example: in the class code example with the matrix, when traversing through COLUMNS first, we got a faster result than when traversing with ROWS first. So obviously, those variables and instructions are NOT just the same! Knowing the difference can help.
 
