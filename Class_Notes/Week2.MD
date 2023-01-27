@@ -31,3 +31,49 @@
 - Cache: memory that is stored really closely to the computer's CPU, so you will have quick access to it. However, it is very limited in terms of how much it can store. 
 
 ## Jan. 27, 2023
+
+### Richard Stallman
+- Developed "copyleft" 
+- Caused DARPA to require passwords in MIT
+- Created the first recursive acronym, GNU. GNU has
+    - Compiler, debugger, and so much more 
+
+### UNIX
+- Oldest "modern" operating system that has many flavors (e.g. Android, Linux, iOS, etc) 
+- Most widely used 
+
+### Command Line Capabilities
+- Editor (e.g. gedit, VIM, Notepad++)
+- Compiler / Linker (gcc)
+- Build manager (make) 
+- Debugger (gdb)
+- Project management (git)
+
+### GCC (GNU C Compiler)
+- To compile in our class: 
+    gcc (commands) 
+
+1. -o is for output file / command name
+2. -ggdb is to include debug information to output file 
+3. -Wall is to turn on all reasonable warning messages 
+4. -std=c18 is to use the latest 2018 C standard 
+
+- Example: gcc -ggdb -Wall -std=c18 -o test test.c 
+
+### Compile / Link Process
+- Pre-processor: deals with all of the #include and other things # 
+- 
+
+### Makefile
+- Makefile: a file that tells "make" command what to do. 
+    - THIS FILE DOES NOT HAVE ANY EXTENSION (.txt, .mk, etc)
+
+- Makefile has a bunch of "make rules": 
+    1. Target: the file that this rule produces (the executable)
+    2. Dependencies: a list of file used to make the target 
+    3. Recipe: Unix command(s) to produce target from the dependency files.
+        - MUST HAVE TAB BEFORE RECIPE!
+
+- Example on ppt
+
+### 
