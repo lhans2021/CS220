@@ -1,7 +1,5 @@
 # CS 220 | Week 2
 
-## Jan. 25, 2023
-
 ### Programmer's View of a Computer (Our Typical View) 
 
 - Imagine I am a programmer. As such, the way I view my programming of a computer is: 
@@ -30,7 +28,6 @@
 
 - Cache: memory that is stored really closely to the computer's CPU, so you will have quick access to it. However, it is very limited in terms of how much it can store. 
 
-## Jan. 27, 2023
 
 ### Richard Stallman
 - Developed "copyleft" 
