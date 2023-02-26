@@ -103,30 +103,35 @@
 
 - See Slides
 
-### C Language Basics (OFFICAL START OF 220)
+### C Language Basics (OFFICAL START OF 220!!)
 
 - Function: a body of code that can be used to perform the same task multiple times.
     - Basic building block of C -- almost everything in C is in a function. 
-    - Functions create abstract items -- we don't care how the function does a task several times. We just know it does.
+    - Functions create ABSTRACT items -- we don't care how the function does a task several times. We just know it does.
+        - The more CONCRETE information is the function's definition. 
+        - We can see the idea of ABSTRACTION vs CONCRETE. 
     - Functions allow for reusability -- you can keep doing that task over and over and over again.
+        - The idea is to code the function CONCRETELY once and then use it over and over ABSTRACTLY. 
     - Example: 
     int cent_to_far(int t){
         return (t*9) / 5 + 32;
     }
 
-- Variables: some space in RAM memory that is used to store specific data. 
+- Variables: the name of some space in RAM memory that is used to store specific data. 
     - RAM will go away when your computer is off. 
     - Example: 
     float GPA = 3.97; 
     In this case, "GPA" is the name of some memory address in RAM that stores the value, 3.97
 
 - Data Type: an attribute of data that tells the computer how to deal with the value
-    - Tells compiler how many bits to use to store the data and how to interpret those bits 
+    - Tells compiler how many bits to use to store the data
+        - Example: declaring a "float" would require 32 bits to be allocated 
+    - Tells compiler how to interpret the bits 
+        - Example: if I declare a "float", compiler will interpret first bit as the sign bit   
     - Enables automatic conversion from one to another
     - Enables compiler to make sure data is used correctly
         - Example: cannot add a String to an int, bits won't end up correctly.
-        - Example 2: cannot convert float to int, bits won't be right
-
+        
     - Built in types: 
         1. Types To Represent Numbers: 
             a. Integers (binary 2's complement, whole numbers) 
@@ -153,13 +158,14 @@
 - Variable Declaration Statements: 
     - type nameOfVariable = variableValue; 
 
-    - Variables must be declared ONCE (e.g. int x;) before it is used, but may not be assigned a value until later. 
+    - Variables must be declared ONCE (e.g. int x;) before it is used, but may be assigned a value until later. 
     - Local Variable: variables that are accessible only inside a function. They are created with each instance of the function and destroyed after the function ends. 
-   - Global Variable: variables that are declared outside the function. 
-        - They are created usually before the main function runs and destroyed after main function ends
+   - Global Variable: variables that are created before the function starts. They are created usually before the main function runs and destroyed after main function ends
+        - Reduces "reusability" 
+        - "Visible" to any function in the program/file
 
-- Integer Literals: values you specify in your program
-    - Decimal numbers are signed integer literals
+- Integer Literals: decimal values you specify in your program
+    - Decimal numbers are typically signed  literals
         - Example: int x = 93; 
         - Add "U" to suffix to make these decimal numbers unsigned
             - Example: unsigned char uy = 183U; 
@@ -230,8 +236,7 @@ int cen_to_far(int t) {
     - It helps with the visual -- flip through the slides in order.
     - Allows us to understand that having invocations and local variables is important.
 
-- "Upside Down Code": when all of the functions you want to use are defined above the function invocation. 
-    - Makes you define functions bottom up 
+- "Upside Down Code": when all of the functions you want to use are defined above the function invocation (main function). 
 
 - Function Definition vs Declaration: 
     - You can declare the function before defining it by including the following: 
@@ -242,10 +247,10 @@ int cen_to_far(int t) {
 - "RightSide Up Code": when all of your functions you want to use are DECLARED above function invocations in main, but are DEFINED after the main function 
     - Allows you to read the code downwards instead of upside. 
 
-- Main Function: function that OS invokes 
+- Main Function: function that OS invokes. It's essentially the function that will cause your program to run!  
     - Arguments: 
-        1. int argc - number of arguments
-        2. char **argv - array of Strings (argv is a pointer to a pointer to a character, or a list of characters)
+        1. int argc - number of arguments passed into main (including .\<executable>!!)
+        2. char **argv - array of Strings (argv is a pointer to an array of characters, aka String, or char *myString) 
     
 ### C Control Flow
 
@@ -260,11 +265,13 @@ int cen_to_far(int t) {
 
     }
 
-- Switch Statement: multiple if/else in a row checking the same value against a bunch of options. 
+- Switch Statement: multiple if/else in a row checking the same value against a bunch of options.
+    - Potentially a glorified "if/else" statement
     switch(<whatever you want to check>) {
         case (<whatever you want to check it against>): 
             <stuff you want to do if true> 
-            break; 
+            break; // if you don't have "break", if this case is a match, the program will continue executing every other   
+                    // case down the line. 
         default: 
             <do this if no match is found>
     }
@@ -274,11 +281,28 @@ int cen_to_far(int t) {
 
     }
 
-- for loop: a loop that will start and do a particular body of code for a specific number of times
+- for loop: a loop that will start and do a particular body of code for a specific number of times AS LONG AS a condition is true. If it was never true to begin with, the body will not run
+    - A glorified "while" loop
     for (initial; condition; iteration) {
 
     }
 
 - do/while Statement: a while loop that will DO whatever is specified in the "DO" part FIRST, and then check the condition to see if we should keep doing it. 
+    - It will definitely run at least once, because "DO" will run the first time BEFORE the condition is checked! 
+    - Modified version of the "while" loop
+    do {
+        
+    }
+    while (condition);
     
-- 
+- "break" statement: will cause the program to BREAK OUT of the IMMEIDATE LOOP that the statement is within 
+    - Example: 
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j <5; j++) {
+                for (int k = 0; k<5; k++) {
+                    break; // this will break out of the "for loop" with "k" as its iter variable
+                }
+            }
+        }
+
+- "continue" statement: will cause the program to go to the next iteration of the IMMEDIATE LOOP that the statement is within. Condition will be checked again! 
