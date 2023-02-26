@@ -268,10 +268,10 @@
         <fractional value in binary> is just like the one above in previous ex 
         exponent = somewhere from [-126, 127] 
 
-    - Largest Positive Value Possible is: -1^0 x 1.11111... x 2^(137) which is about 10^38
+    - Largest Positive Value Possible is: -1^0 x 1.11111... x 2^(127) which is about 10^38
     - Smallest Positive Value Positive is: -1^0 x 1.0 x 2^(-126) which is about 1.175 x 10^(-38)
     - Smallest Negative Value Possible is: -1^1 x 1.0 x 2^(-126) which is about -1.175 x 10 ^(-38)
-    - Largest Negative Value Possible is: -1^1 x 1.1111... x 2^(137) which is about -10^(38)
+    - Largest Negative Value Possible is: -1^1 x 1.1111... x 2^(127) which is about -10^(38)
 
 - IEEE 754 Standard 
     - Binary will be represented as [+/-]1.<fraction> x 2^(exponent) 
@@ -300,7 +300,7 @@
             - 1.0110110... x 2^9
 
     5. Step 4b: "bias" the exponent which covers 8 bits 
-        - 8 bit values hold integers up to 255 at largest 
+        - 8 bit values hold integers up to 0 to 255 at largest 
         - Since our exponents will range [-127, 126], we need to sort of make it map to something in the range [1,254]
         - We do this by adding a BIAS value of 127 
             - This works because: 
@@ -325,10 +325,19 @@
 -  IEEE 754 Summary
     - Check the slides for the summary of normalization, biasing, parsing, special cases, etc 
 
-- "Denormal" or "Subnormal" Numbers
-    - If exponent bits are ALL zero, we have a special capability to represent numbers between [-2^127, 0] 
-        - Assume fraction starts with 0 (0. ... instead of 1. ...)! 
-        - Assume exponent is -126 
+- IEEE 754 Special Cases: 
+    - If the exponent bits are ALL zero and frac are ALL zero, we have a special case of +- 0 
+
+    - If the exponent bits are ALL one and frac are ALL zero, we have a special case of infinity 
+
+    - If the exponent bits are ALL one and the frac have at least one 1, we have a special case of NaN (not a number)! 
+
+- "Denormal" and "Subnormal" Special Cases: 
+    - Denormal (or subnormal) means smaller than usual. In "normal" numbers, we'd have 2^(-126) and -2^(-126) as the smallest values; but with denormal, we can get even smaller
+
+    - If exponent bits are ALL zero, we have special numbers. In this case, assume the following: 
+        1. 0.<FRAC> x 2^(-126)
+        - https://www.youtube.com/watch?v=WZUPNXsusOA  
     
     - Biggest Subnormal Number: 
         - Exponent would be all zeros to assume fraction starts with 0. ...
@@ -336,7 +345,9 @@
 
     - Smallest Subnormal Number: 
         - Exponents would be all zero
-        - Fraction bits would be all zero except right most, so 0.000...1  = 1.40129 x 10^(-45) 
+        - Fraction bits would be all zero except right most, so 0.000...1  = 1.40129 x 10^(-45)
+
+    - The way that we represent the denormal numbers is the SAME as with normal EXCEPT that there is an IMPLIED ZERO (0. ...)  
 
 - Subnormal Precision
     - Normal float numbers have 24 bit precision 
@@ -406,7 +417,9 @@
 
 - What Happens When Types are Mixed? 
     - Mixed Type Expressions
-        - 
+    - Assignment Statements
+    - Argument Evaluation
+    - Explicit Casting
 
 - C Automatic Type Conversion Rules
     1. C converts an expression or all parts of an expression to the most "general" type and uses that type 
