@@ -13,11 +13,11 @@
         - Transitivity 
 
 - Two's Complement Binary
-    - A vector of n binary digits that represent a number 
+    - Any abstract integer is actually a TWO'S COMPLEMENT BINARY NUMBER concretely. 
+    - A vector of n bits that represent a number 
     - Complement: negative of the number    
-        - 
-    - If leftmost bit is a ZERO, number is positive. Just perform standard conversion 
-    - If leftmost bit is ONE, number is negative (complement). Do the standard conversion IF it were positive, then subtract 2^n
+    - If leftmost bit is a ZERO, number is positive. Just perform standard conversion from binary <--> base 10
+    - If leftmost bit is ONE, number is negative (complement). Do the standard conversion IF it were positive, then subtract 2^n 
 
 - Using Leaks to Calculate 2^x After Understanding Concrete Implementation of Numbers (i.e. two's complement) 
     - 2^x is just a single 1 in the x-th bit 
@@ -28,13 +28,16 @@
     printf("%d", y);
 
 - Using Leaks to Calculate Strings of x 1 bits 
-    - 
+    - We know based on a proof by induction that (2^x)-1 is a bit string of x 1 bits 
+    - We also know that 2^x is just 1<<x. 
+    - So, we can combine two facts to get that (2^x) -1 is (1<<x) -1. 
 
-- More 
+- Using Leaks to Negate Values 
+    - To negate a value, we can flip all of the bits (negate using ~) and then add 1 (0001). 
 
 - Unary Minus Sign (negation) 
     - Multiplication by -1, negation, is expensive
-    - Instead, we can just flip all of the bits and add 1 
+    - Instead, we can just flip all of the bits and add 1 just as described in the 3rd leak above
 
 - Adding Unsigned Binary Numbers
     - You know how to do this
@@ -44,17 +47,21 @@
 
 - Subtracting Binary Numbers
     - Add the negation of the number (e.g. 5-2 = 5+(-2) )
+    - Remember, to negate, we flip the bits and add 1!! 
 
 - Multiplying Binary Numbers
     - Check slides for example
     - The idea is, you are going to do the SAME as long muliplication on paper, but with all of the 0s and 1s instead of base 10 integers 
 
 - C Leaky Idiom: Multiply by 2^x 
-    - Instead of multiplying by 2, simply shift to the left by 2. It would be MUCH FASTER than simple multiplication! 
+    - Instead of multiplying y by 2^x, we can just do y << x to represent y x 2^x. 
+    - Informal Proof: 
+        2^x is just 1<<x
+        y x 2^x is just y (1<<x) which is just y << x. 
     - Example: 
-    int x = 2;
-    int y = atoi(argv[0]);
-    int ym = y << x; // this means shifting 2 by y many times, or doing 2 * 2 * 2 * ... y many times, which is 2^y 
+        int x = 2;
+        int y = atoi(argv[1]);
+        int ym = y<<x // this would be the same as y x 2^x
 
 - Binary Division
     - Similar to multiplication in that it requires a LONG process of long division. There are huge chains of logic. 
@@ -68,20 +75,19 @@
     1. If all of the bits are 0, the integer has a FALSE truth value 
     2. If any of the bits are 1, the integer has a TRUE truth value. 
 
-    - So, logically, to determine this, if we "OR" all of the bits and get 1, integer is TRUE. If 0, integer is FALSE.
+    - So, logically, to determine this, if we "AND" all of the bits and get 1, integer is TRUE. If 0, integer is FALSE.
 
 - Truth Value Using Logical && 
-    - Each integer has a truth value obtained by "OR"ing all of the bits. 
+    - Each integer has a truth value obtained by "AND"ing all of the bits. 
     - We use && to see if both operands are TRUE. 
     - If we take each individual integer's truth value and "AND" them with one another, 1 is TRUE 0 is FALSE. 
 
-- Bitwise & 
-    - Bitwise & is essentially "AND"ing every individual bit. 
-    - Bitwise & has a lot of good uses such as selecting specific bits we care about. To do this: 
+- Bitwise & To Select Bits (Mask)
+    - We can use bitwise & to create a mask and select bits we care about! 
     1. Create a "mask" that has 1 for the interesting bits and 0 for the ones we want to ignore
     2. Bitwise "AND" the mask and the original value I'm examining
-    3. The result after "AND"ing the two tells me if the significant bit that I care about is TRUE (1 in the result). Because, 1 and anything gives me what the original thing was. This tells me if my significant bit is T/F 
-
+    3. Result after "AND"ing the mask and the original value would have the original bits that I care about in the 1 positions of the mask. Everywhere else, there will just be 0s. 
+    
     - Example: print binary
     COME BACK TO THIS SOON PLEASE
 
@@ -106,7 +112,7 @@
     - Example: in a signed char can hold 127 at the highest which is 0b0111 1111. If you add 1, it will become 0b1000 0000 which is NOT 128, but rather, -128. 
 
 - Casting in C
-    - 
+    - Casting in C will allow us to interpret the bits differently. Unless we explicitly cast, the interpretation is based on the type of the variable
 
 - Mixing Integer Types
     1. Mixing Type Expressions
@@ -136,7 +142,7 @@
     - Check the slides for the generality. It essentially starts like: char --> unsigned char --> short --> unsigned short --> etc 
 
 - Converting "Unsigned" <--> Signed 
-    - The bits stay the EXACT same but the sign is IGNORED. 
+    - The bits stay the EXACT same but the sign is either IGNORED or ACKNOWLEDGED. 
     - Example: 
     char x = -22
     unsigned char y = x; 
@@ -164,10 +170,12 @@
     int leftX;
 
     Now, when we enter a negative number for "leftX" and then add that to the "unsigned width", "leftX" will be also treated as unsigned. But, if we printf the sum, C will print a signed value because printf will recognize it's signed and print it that way. 
+        - A possible explanation for this is because C will convert, in an expression, to the most general type. "unsigned" is more general than "signed", so the "leftX" becomes an unsigned int! 
 
     - This is why "Unsigned" is dangerous in C. Let's try not to use them. 
 
 -  Storing Bytes: "Little Endian vs Big Endian" 
+    - ABSTRACTLY, we see bits as being stored most significant to least significant on the right.
     - Big Endian: storing bytes based on most significant BYTE to least significant BYTE (not bits!) 
     - Little Endian: storing bytes based on least significant BYTE to most significant BYTE (not bits!) 
 

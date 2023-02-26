@@ -153,6 +153,7 @@
 ## Data in C: Characters (Under the Cover)
 
 - Abstract View of Characters
+    - Characters are anything on the keyboard, like 'a', 'b', '\t', etc. 
     - Character literals are in single quotes, like '@' and '\n' 
     - Characters are assigned to type char or int 
     - Character I/O: use putchar and getchar or printf with "%c" format 
@@ -163,19 +164,17 @@
     - String I/O: use printf with "%s" format 
 
 - ASCII Character Coding: 
-    - Each character corresponds to a particular number 
+    - Each character corresponds to a particular two digit hex number that can be translated to a decimal number from 0 to 127. NO NEGATIVES!!! 
     - Example: '6' is at 0x36 (which is 68 in decimal) 
-    - I can treat each of the hex numbers as an integer up to 127 or -128
 
 - Hex to Binary 
     - 'A' = 0x41 = 0b0100 0001 = 65. So I can say represent A as 'A' or 65. 
 
 - Is "char" a symbol or a number? 
-    - Can be either or. 
-    - In a symbol context: 
+    - Can be either or. We can mix them in expressions! 
+    - Example: 
         char x = 'a'; int y; y = x + 1;  // add 1 to whatever number 'a' is 
-        printf("%c\n", (char)y); // prints the number 'y' as its corresponding ASCII 
-    - In an integer context: 
+        printf("%c\n", (char)y); // prints the number 'y' as its corresponding ASCII which is 'b' 
 
 - Constants
     - Single quotes surround a single character: 
@@ -190,8 +189,15 @@
         - Example: char fi = 0b01000100; 
     - Double quotes 
 
-- Using Alpha index to do arithmetic on ASCII codes 
-    - Since alphabet is contiguous in ASCII, use arithmetic on ASCII codes 
+- Notes on ASCII
+    - Normal file Input/Output (I/O) is in ASCII. So, most of the stuff we see in English, like 'a', 'b', etc., are changed to their ASCII equivalent and then translated to hex/binary
+        - Files we shouldn't be able to read ar "binary files" with all this binary encoding.
+    - Most editors can ONLY read ASCII files (which is why we create the executable!)
+    - Printers print using ASCII
+        - If your ASCII code doesn't translate to a symbol, it's unprintable! 
+        - Some of the ASCII code, like /t, are not symbols but are instructions (e.g. tab in that case) 
+    - Keyboards translate to ASCII because they are the "input" 
+    - Terminals translate ASCII to characters because they are the "output" 
 
 
 
