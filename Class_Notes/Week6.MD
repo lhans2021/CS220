@@ -74,7 +74,7 @@
 
 - Dynamic Memory 
     - Essentially, this is using libraries to request/return new memory on the heap 
-    - malloc() will get me sole R/W permission to a certain piece of memory that I request. It will give me the address of it 
+    - malloc() will get me sole R/W permission to a certain piece of memory that I request. It will give me the address to the START OF THAT LOCATION in memory UNTIL I FREE IT using free(<space variable>)
 
 - VALGRIND
     - Tracks each malloc/free() and memory reference
